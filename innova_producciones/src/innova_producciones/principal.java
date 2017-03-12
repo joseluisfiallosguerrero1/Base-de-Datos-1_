@@ -9,7 +9,9 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author felix
@@ -21,8 +23,20 @@ public class principal extends javax.swing.JFrame {
      */
     public principal() {
         initComponents();
+        Image img = Toolkit.getDefaultToolkit().createImage(getClass().getResource("innova.png")).getScaledInstance(520, 300, 0);
+        imagen_principal.setIcon(new ImageIcon(img));
+        
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(connection);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
-
+    String connection= "jdbc:sqlserver://localhost:1433;databaseName=INNOVA;user=innova;password=12345";
+    Connection con;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +46,23 @@ public class principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_inventario = new javax.swing.JDialog();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
         label_menu = new javax.swing.JLabel();
         imagen_principal = new javax.swing.JLabel();
         label_cliente = new javax.swing.JLabel();
@@ -39,6 +70,79 @@ public class principal extends javax.swing.JFrame {
         label_inventario = new javax.swing.JLabel();
         label_eventos = new javax.swing.JLabel();
         Background_principal = new javax.swing.JLabel();
+
+        jd_inventario.setForeground(new java.awt.Color(0, 0, 51));
+        jd_inventario.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Inventario Propio");
+        jd_inventario.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 160, 40));
+        jd_inventario.getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 150, 10));
+
+        jLabel2.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Codigo");
+        jd_inventario.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 50, 20));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/tela-polar-azul-marino.jpg"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        jd_inventario.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 530));
+
+        jLabel4.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Nombre");
+        jd_inventario.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
+        jd_inventario.getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 160, -1));
+        jd_inventario.getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 160, -1));
+
+        jLabel7.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Descripcion");
+        jd_inventario.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/buttoncolor.PNG"))); // NOI18N
+        jLabel8.setText("jLabel8");
+        jd_inventario.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 90, 30));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Delete.PNG"))); // NOI18N
+        jLabel9.setText("jLabel9");
+        jd_inventario.getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 50, 40));
+
+        jTable1.setForeground(new java.awt.Color(0, 0, 51));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombe", "Descripcion", "En Uso"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jd_inventario.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 490, 210));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Modify.PNG"))); // NOI18N
+        jLabel10.setText("jLabel10");
+        jd_inventario.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 50, 40));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jd_inventario.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jd_inventario.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 530));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INNOVA PRODUCCIONES");
@@ -80,6 +184,11 @@ public class principal extends javax.swing.JFrame {
                 label_inventarioMouseMoved(evt);
             }
         });
+        label_inventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_inventarioMouseClicked(evt);
+            }
+        });
         getContentPane().add(label_inventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 170, 50));
 
         label_eventos.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
@@ -117,6 +226,9 @@ public class principal extends javax.swing.JFrame {
         label_personal.setForeground(Color.WHITE);
         label_inventario.setForeground(Color.WHITE);
         label_eventos.setForeground(Color.WHITE);
+        Image img = Toolkit.getDefaultToolkit().createImage(getClass().getResource("innova.png")).getScaledInstance(520, 300, 0);
+        imagen_principal.setIcon(new ImageIcon(img));
+        
     }//GEN-LAST:event_Background_principalMouseMoved
 
     private void label_personalMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_personalMouseMoved
@@ -136,6 +248,14 @@ public class principal extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("events.png"));
         imagen_principal.setIcon(icon);
     }//GEN-LAST:event_label_eventosMouseMoved
+
+    private void label_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_inventarioMouseClicked
+        jd_inventario.setVisible(true);
+        jd_inventario.setLocationRelativeTo(this);
+        jd_inventario.pack();
+        jd_inventario.setModal(true);
+        
+    }//GEN-LAST:event_label_inventarioMouseClicked
 
     /**
      * @param args the command line arguments
@@ -175,6 +295,23 @@ public class principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background_principal;
     private javax.swing.JLabel imagen_principal;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JDialog jd_inventario;
     private javax.swing.JLabel label_cliente;
     private javax.swing.JLabel label_eventos;
     private javax.swing.JLabel label_inventario;
