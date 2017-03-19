@@ -8,10 +8,15 @@ package innova_producciones;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import javax.swing.ImageIcon;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author felix
@@ -23,6 +28,7 @@ public class principal extends javax.swing.JFrame {
      */
     public principal() {
         initComponents();
+        this.setLocationRelativeTo(null);
         Image img = Toolkit.getDefaultToolkit().createImage(getClass().getResource("innova.png")).getScaledInstance(520, 300, 0);
         imagen_principal.setIcon(new ImageIcon(img));
         
@@ -63,6 +69,23 @@ public class principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jd_personal = new javax.swing.JDialog();
+        jLabel6 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        tf_puestoPersonal = new javax.swing.JTextField();
+        tf_telefonoPersonal = new javax.swing.JTextField();
+        tf_nombrePersonal = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jt_personal = new javax.swing.JTable();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         label_menu = new javax.swing.JLabel();
         imagen_principal = new javax.swing.JLabel();
         label_cliente = new javax.swing.JLabel();
@@ -144,6 +167,100 @@ public class principal extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
         jd_inventario.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 530));
 
+        jd_personal.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                jd_personalWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jd_personalWindowOpened(evt);
+            }
+        });
+        jd_personal.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Personal");
+        jd_personal.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 160, 40));
+        jd_personal.getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 150, 10));
+
+        jLabel11.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Puesto");
+        jd_personal.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 50, 20));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/tela-polar-azul-marino.jpg"))); // NOI18N
+        jLabel12.setText("jLabel3");
+        jd_personal.getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 530));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/tela-polar-azul-marino.jpg"))); // NOI18N
+        jLabel13.setText("jLabel3");
+        jd_personal.getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 530));
+        jd_personal.getContentPane().add(tf_puestoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 160, -1));
+        jd_personal.getContentPane().add(tf_telefonoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 160, -1));
+        jd_personal.getContentPane().add(tf_nombrePersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 160, -1));
+
+        jLabel14.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Nombre");
+        jd_personal.getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/buttoncolor.PNG"))); // NOI18N
+        jLabel15.setText("jLabel8");
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
+        jd_personal.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 90, 30));
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Delete.PNG"))); // NOI18N
+        jLabel16.setText("jLabel9");
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
+        });
+        jd_personal.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 50, 40));
+
+        jLabel20.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Teléfono");
+        jd_personal.getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 60, 20));
+
+        jt_personal.setForeground(new java.awt.Color(0, 0, 51));
+        jt_personal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Teléfono", "Nombre", "Puesto"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jt_personal);
+
+        jd_personal.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 490, 210));
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Modify.PNG"))); // NOI18N
+        jLabel17.setText("jLabel10");
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+        });
+        jd_personal.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 50, 40));
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
+        jLabel18.setText("jLabel1");
+        jd_personal.getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 560));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INNOVA PRODUCCIONES");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -169,6 +286,11 @@ public class principal extends javax.swing.JFrame {
         label_personal.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
         label_personal.setForeground(new java.awt.Color(255, 255, 255));
         label_personal.setText("Personal");
+        label_personal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_personalMouseClicked(evt);
+            }
+        });
         label_personal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 label_personalMouseMoved(evt);
@@ -215,10 +337,8 @@ public class principal extends javax.swing.JFrame {
 
     private void label_clienteMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_clienteMouseMoved
         label_cliente.setForeground(Color.yellow);
-        
         ImageIcon icon = new ImageIcon(getClass().getResource("clients.png"));
         imagen_principal.setIcon(icon);
-        
     }//GEN-LAST:event_label_clienteMouseMoved
 
     private void Background_principalMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Background_principalMouseMoved
@@ -227,8 +347,7 @@ public class principal extends javax.swing.JFrame {
         label_inventario.setForeground(Color.WHITE);
         label_eventos.setForeground(Color.WHITE);
         Image img = Toolkit.getDefaultToolkit().createImage(getClass().getResource("innova.png")).getScaledInstance(520, 300, 0);
-        imagen_principal.setIcon(new ImageIcon(img));
-        
+        imagen_principal.setIcon(new ImageIcon(img));   
     }//GEN-LAST:event_Background_principalMouseMoved
 
     private void label_personalMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_personalMouseMoved
@@ -253,9 +372,80 @@ public class principal extends javax.swing.JFrame {
         jd_inventario.setVisible(true);
         jd_inventario.setLocationRelativeTo(this);
         jd_inventario.pack();
-        jd_inventario.setModal(true);
-        
+        jd_inventario.setModal(true);  
     }//GEN-LAST:event_label_inventarioMouseClicked
+
+    private void jd_personalWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_personalWindowOpened
+        actualizar(jt_personal);
+    }//GEN-LAST:event_jd_personalWindowOpened
+
+    private void label_personalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_personalMouseClicked
+        jd_personal.setVisible(true);
+        jd_personal.setLocationRelativeTo(this);
+        jd_personal.pack();
+        jd_personal.setModal(true);
+    }//GEN-LAST:event_label_personalMouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        try {
+            PreparedStatement statement = con.prepareStatement("insert into Personal (teléfono, nombre, puesto) values (?,?,?)");
+            int telefono = Integer.parseInt(tf_telefonoPersonal.getText());
+            String nombre = tf_nombrePersonal.getText();
+            String puesto = tf_puestoPersonal.getText();
+            statement.setInt(1, telefono);
+            statement.setString(2, nombre);
+            statement.setString(3, puesto);;
+            this.tf_telefonoPersonal.setText("");
+            this.tf_nombrePersonal.setText("");
+            this.tf_puestoPersonal.setText("");
+            int retorno = statement.executeUpdate();
+            if (retorno > 0) {
+                JOptionPane.showMessageDialog(this, "Contacto creado");
+            }
+            actualizar(jt_personal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        int fila = jt_personal.getSelectedRow();
+        int columna = jt_personal.getSelectedColumn();
+        if (fila != -1) {
+            idBuscar = Integer.parseInt(jt_personal.getValueAt(fila, 0).toString());
+            if (columna == 0) {
+                JOptionPane.showMessageDialog(this, "El id no es modificable, seleccione otro dato." 
+                        , "Error", JOptionPane.ERROR_MESSAGE);
+            }else if (columna == 1) {
+                cambiarTelefono();
+            }else if (columna == 2) {
+                cambiarNombre();
+            }else if (columna == 3) {
+                cambiarPuesto();
+            }else{
+                JOptionPane.showMessageDialog(this, "Seleccione un dato a modificar.", "No hay datos seleccionados en la columna" 
+                    , JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un dato a modificar.", "No hay datos seleccionados" 
+                    , JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jd_personalWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_personalWindowClosing
+        this.setVisible(true);
+    }//GEN-LAST:event_jd_personalWindowClosing
+
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        int fila = jt_personal.getSelectedRow();
+        if (fila != -1) {
+            idBuscar = Integer.parseInt(jt_personal.getValueAt(fila, 0).toString());
+            borrarPersonal();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un dato a eliminar.", "No hay datos seleccionados" 
+                    , JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jLabel16MouseClicked
 
     /**
      * @param args the command line arguments
@@ -297,25 +487,281 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JLabel imagen_principal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JDialog jd_inventario;
+    private javax.swing.JDialog jd_personal;
+    private javax.swing.JTable jt_personal;
     private javax.swing.JLabel label_cliente;
     private javax.swing.JLabel label_eventos;
     private javax.swing.JLabel label_inventario;
     private javax.swing.JLabel label_menu;
     private javax.swing.JLabel label_personal;
+    private javax.swing.JTextField tf_nombrePersonal;
+    private javax.swing.JTextField tf_puestoPersonal;
+    private javax.swing.JTextField tf_telefonoPersonal;
     // End of variables declaration//GEN-END:variables
+    int idBuscar;
+    ArrayList listaCambio = new ArrayList();
+    
+    public int conteoParaPersonal() {
+        int temp = 0;
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select count(id) from Personal;");
+            while (rs.next()) {
+                temp = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+    public int[] idPersonal() {
+        int[] id = new int[conteoParaPersonal()];
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select id from Personal;");
+            int contador = 0;
+            while (rs.next()) {
+                id[contador] = rs.getInt(1);
+                contador++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+    
+    public int[] telefonoPersonal() {
+        int[] telefono = new int[conteoParaPersonal()];
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select teléfono from Personal;");
+            int contador = 0;
+            while (rs.next()) {
+                telefono[contador] = rs.getInt(1);
+                contador++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return telefono;
+    }
+    
+    public String[] nombrePersonal() {
+        String[] nombre = new String[conteoParaPersonal()];
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select nombre from Personal;");
+            int contador = 0;
+            while (rs.next()) {
+                nombre[contador] = rs.getString(1);
+                contador++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombre;
+    }
+    
+    public String[] puestoPersonal() {
+        String[] puesto = new String[conteoParaPersonal()];
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select puesto from Personal;");
+            int contador = 0;
+            while (rs.next()) {
+                puesto[contador] = rs.getString(1);
+                contador++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return puesto;
+    }
+    
+    public void actualizar(JTable jt_personal){
+        String[] columnas = new String[4];
+        columnas [0] = "ID";
+        columnas [1] = "Teléfono";
+        columnas [2] = "Nombre";
+        columnas [3] = "Puesto";
+        int size = conteoParaPersonal();
+        String[][] contenido = new String[size][4];
+        int[] id = idPersonal();
+        int[] telefono = telefonoPersonal();
+        String[] nombre = nombrePersonal();
+        String[] puesto = puestoPersonal();
+        for (int i = 0; i < size; i++) {
+            contenido[i][0] = id[i]+ "";
+            contenido[i][1] = telefono[i]+ "";
+            contenido[i][2] = nombre[i]+ "";
+            contenido[i][3] = puesto[i]+ "";
+        }
+        DefaultTableModel modelo = new DefaultTableModel(contenido, columnas);
+        jt_personal.setModel(modelo);
+    }
+    
+    public ArrayList listaParaCambio(int idBuscar){
+        ArrayList lista = new ArrayList();
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs;
+            rs = statement.executeQuery("select teléfono from Personal where id = '" + idBuscar + "'");
+            while (rs.next()) {
+                lista.add(rs.getInt(1));
+            }
+            rs = statement.executeQuery("select nombre from Personal where id = '" + idBuscar + "'");
+            while (rs.next()) {
+                lista.add(rs.getString(1));
+            }
+            rs = statement.executeQuery("select puesto from Personal where id = '" + idBuscar + "'");
+            while (rs.next()) {
+                lista.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
+    public void cambiarTelefono() {
+        String nuevo = JOptionPane.showInputDialog(this, "Escriba el nuevo teléfono", "Cambio de teléfono"
+                ,JOptionPane.QUESTION_MESSAGE);
+        if (nuevo != null) {
+            int nuevoTelefono = Integer.parseInt(nuevo);
+            try {
+                listaCambio = listaParaCambio(idBuscar);
+                String nombre = (String)listaCambio.get(1);
+                String puesto = (String)listaCambio.get(2);
+                Statement statement = con.createStatement();
+                ResultSet rs;
+                rs = statement.executeQuery("select* from Personal where id = '"+idBuscar+"'");
+                while (rs.next()) {
+                    PreparedStatement update = con.prepareStatement("update Personal set teléfono = ?"
+                            + ", nombre = ?, puesto = ? where id = '"+idBuscar+"'");
+                    update.setInt(1, nuevoTelefono);
+                    update.setString(2, nombre);
+                    update.setString(3, puesto);
+                    update.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Se ha cambiado el teléfono.");
+                }
+                actualizar(jt_personal);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha cambiado el teléfono.");
+        }
+    }
+    
+    public void cambiarNombre() {
+        String nuevoNombre = JOptionPane.showInputDialog(this, "Escriba el nuevo nombre", "Cambio de nombre"
+                ,JOptionPane.QUESTION_MESSAGE);
+        if (nuevoNombre != null) {
+            try {
+                listaCambio = listaParaCambio(idBuscar);
+                int telefono = (Integer)listaCambio.get(0);
+                String puesto = (String)listaCambio.get(2);
+                Statement statement = con.createStatement();
+                ResultSet rs;
+                rs = statement.executeQuery("select* from Personal where id = '"+idBuscar+"'");
+                while (rs.next()) {
+                    PreparedStatement update = con.prepareStatement("update Personal set teléfono = ?"
+                            + ", nombre = ?, puesto = ? where id = '"+idBuscar+"'");
+                    update.setInt(1, telefono);
+                    update.setString(2, nuevoNombre);
+                    update.setString(3, puesto);
+                    update.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Se ha cambiado el nombre.");
+                }
+                actualizar(jt_personal);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha cambiado el nombre.");
+        }
+    }
+    
+    public void cambiarPuesto() {
+        String nuevoPuesto = JOptionPane.showInputDialog(this, "Escriba el nuevo puesto", "Cambio de puesto"
+                ,JOptionPane.QUESTION_MESSAGE);
+        if (nuevoPuesto != null) {
+            try {
+                listaCambio = listaParaCambio(idBuscar);
+                int telefono = (Integer)listaCambio.get(0);
+                String nombre = (String)listaCambio.get(1);
+                Statement statement = con.createStatement();
+                ResultSet rs;
+                rs = statement.executeQuery("select* from Personal where id = '"+idBuscar+"'");
+                while (rs.next()) {
+                    PreparedStatement update = con.prepareStatement("update Personal set teléfono = ?"
+                            + ", nombre = ?, puesto = ? where id = '"+idBuscar+"'");
+                    update.setInt(1, telefono);
+                    update.setString(2, nombre);
+                    update.setString(3, nuevoPuesto);
+                    update.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Se ha cambiado el puesto.");
+                }
+                actualizar(jt_personal);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha cambiado el puesto.");
+        }
+    }
+    
+    public void borrarPersonal(){
+        int seguro = JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar esta persona?");
+        if (seguro == JOptionPane.YES_OPTION) {
+            try {
+                listaCambio = listaParaCambio(idBuscar);
+                Statement statement = con.createStatement();
+                ResultSet rs;
+                rs = statement.executeQuery("select* from Personal where id = '"+idBuscar+"'");
+                while (rs.next()) {
+                    PreparedStatement delete = con.prepareStatement("delete from Personal where id = '"+idBuscar+"'");
+                    delete.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Se ha borrado la persona.");
+                }
+                actualizar(jt_personal);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha borrado la persona.");
+        }
+    }
 }
