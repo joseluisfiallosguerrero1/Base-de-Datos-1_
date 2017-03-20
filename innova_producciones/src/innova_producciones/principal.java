@@ -43,7 +43,7 @@ public class principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        refresh();
     }
     String connection = "jdbc:sqlserver://localhost:1433;databaseName=INNOVA;user=innova;password=12345";
     Connection con = null;
@@ -63,16 +63,17 @@ public class principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        codigo_inventario = new javax.swing.JTextField();
+        nombre_inventario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jt_inventario = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descripcion_inventario = new javax.swing.JTextArea();
+        error = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jd_personal = new javax.swing.JDialog();
         jLabel6 = new javax.swing.JLabel();
@@ -108,7 +109,7 @@ public class principal extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         ftf_EvtHora = new javax.swing.JFormattedTextField();
         jLabel28 = new javax.swing.JLabel();
-        cb_EvtCliente = new javax.swing.JComboBox<>();
+        cb_EvtCliente = new javax.swing.JComboBox<String>();
         jl_AddEvt = new javax.swing.JLabel();
         jl_DelEvt = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -146,8 +147,8 @@ public class principal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nombre");
         jd_inventario.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
-        jd_inventario.getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 160, -1));
-        jd_inventario.getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 160, -1));
+        jd_inventario.getContentPane().add(codigo_inventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 160, -1));
+        jd_inventario.getContentPane().add(nombre_inventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 160, -1));
 
         jLabel7.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,14 +157,24 @@ public class principal extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/buttoncolor.PNG"))); // NOI18N
         jLabel8.setText("jLabel8");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jd_inventario.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 90, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Delete.PNG"))); // NOI18N
         jLabel9.setText("jLabel9");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         jd_inventario.getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 50, 40));
 
-        jTable1.setForeground(new java.awt.Color(0, 0, 51));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jt_inventario.setForeground(new java.awt.Color(0, 0, 51));
+        jt_inventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -179,7 +190,7 @@ public class principal extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jt_inventario);
 
         jd_inventario.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 490, 210));
 
@@ -187,11 +198,14 @@ public class principal extends javax.swing.JFrame {
         jLabel10.setText("jLabel10");
         jd_inventario.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 50, 40));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        descripcion_inventario.setColumns(20);
+        descripcion_inventario.setRows(5);
+        jScrollPane2.setViewportView(descripcion_inventario);
 
         jd_inventario.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        jd_inventario.getContentPane().add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 20, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -396,7 +410,7 @@ public class principal extends javax.swing.JFrame {
         jLabel30.setText("Duracion: ");
         jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
 
-        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 50, -1));
 
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,7 +418,7 @@ public class principal extends javax.swing.JFrame {
         jd_evento.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
-        jd_evento.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 910, 670));
+        jd_evento.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 910, 700));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INNOVA PRODUCCIONES");
@@ -664,6 +678,51 @@ public class principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jl_AddEvtMouseClicked
 
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        try {
+
+            if (!codigo_inventario.getText().isEmpty()) {
+                error.setText("");
+                Statement st = con.createStatement();
+                int codigo = Integer.parseInt(codigo_inventario.getText());
+                String nombre = nombre_inventario.getText();
+                String descripcion = descripcion_inventario.getText();
+                if (nombre.isEmpty()) {
+                    nombre = "N/A";
+                }
+                st.execute("insert Inventario values (" + codigo + ",'" + nombre + "','" + descripcion + "'," + 0 + ")");
+                JOptionPane.showMessageDialog(jd_inventario, "¡Se ha agregado al Inventario con éxito!");
+                codigo_inventario.setText("");
+                nombre_inventario.setText("");
+                descripcion_inventario.setText("");
+            } else {
+                JOptionPane.showMessageDialog(jd_inventario, "¡Ingrese el codigo!!");
+                error.setText("*");
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(jd_inventario, "ERROR!\nEl codigo que se ha ingresado no es válido");
+        }
+        
+        refresh();
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        if (jt_inventario.getSelectedRow() >= 0) {
+            try {
+                Statement st = con.createStatement();
+                int codigo = Integer.parseInt(jt_inventario.getValueAt(jt_inventario.getSelectedRow(), 0).toString());
+                st.execute("Delete Inventario from Inventario where Código =" + codigo); 
+                JOptionPane.showMessageDialog(jd_inventario, "¡Se Elimino el objeto del inventario exitosamente!");
+                refresh();
+            } catch (Exception e) {
+
+            }
+
+        }
+    }//GEN-LAST:event_jLabel9MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -702,6 +761,9 @@ public class principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background_principal;
     private javax.swing.JComboBox<String> cb_EvtCliente;
+    private javax.swing.JTextField codigo_inventario;
+    private javax.swing.JTextArea descripcion_inventario;
+    private javax.swing.JLabel error;
     private javax.swing.JFormattedTextField ftf_EvtFecha;
     private javax.swing.JFormattedTextField ftf_EvtHora;
     private javax.swing.JLabel imagen_principal;
@@ -743,22 +805,20 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JDialog jd_evento;
     private javax.swing.JDialog jd_inventario;
     private javax.swing.JDialog jd_personal;
     private javax.swing.JLabel jl_AddEvt;
     private javax.swing.JLabel jl_DelEvt;
     private javax.swing.JTable jt_Evts;
+    private javax.swing.JTable jt_inventario;
     private javax.swing.JTable jt_personal;
     private javax.swing.JLabel label_cliente;
     private javax.swing.JLabel label_eventos;
     private javax.swing.JLabel label_inventario;
     private javax.swing.JLabel label_menu;
     private javax.swing.JLabel label_personal;
+    private javax.swing.JTextField nombre_inventario;
     private javax.swing.JSpinner sp_EvtDur;
     private javax.swing.JSpinner sp_EvtPersonas;
     private javax.swing.JTextField tf_EvtTipo;
@@ -1002,6 +1062,26 @@ public class principal extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "No se ha borrado la persona.");
+        }
+    }
+    public void refresh() {
+        DefaultTableModel m = (DefaultTableModel) jt_inventario.getModel();
+        int size = m.getRowCount();
+        for (int i = 0; i <size; i++) {
+            m.removeRow(0);
+        }
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select* from Inventario");
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String Descripcion = rs.getString(3);
+                Object arr[] = {id, nombre, Descripcion};
+                m.addRow(arr);
+            }
+        } catch (Exception e) {
+
         }
     }
 }
