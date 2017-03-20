@@ -27,11 +27,11 @@ import javax.swing.table.DefaultTableModel;
  * @author felix
  */
 public class principal extends javax.swing.JFrame {
-
+        ArrayList<Cliente> clientes = new ArrayList();
     /**
      * Creates new form principal
      */
-    public principal() {
+    public principal() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
         Image img = Toolkit.getDefaultToolkit().createImage(getClass().getResource("innova.png")).getScaledInstance(520, 300, 0);
@@ -44,6 +44,7 @@ public class principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cliente();
         refresh();
     }
     String connection = "jdbc:sqlserver://localhost:1433;databaseName=INNOVA;user=innova;password=12345";
@@ -110,7 +111,7 @@ public class principal extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         ftf_EvtHora = new javax.swing.JFormattedTextField();
         jLabel28 = new javax.swing.JLabel();
-        cb_EvtCliente = new javax.swing.JComboBox<>();
+        cb_EvtCliente = new javax.swing.JComboBox<String>();
         jl_AddEvt = new javax.swing.JLabel();
         jl_DelEvt = new javax.swing.JLabel();
         jl_EditEvt = new javax.swing.JLabel();
@@ -118,6 +119,28 @@ public class principal extends javax.swing.JFrame {
         sp_EvtDur = new javax.swing.JSpinner();
         jLabel31 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        jDialog1 = new javax.swing.JDialog();
+        telefono_cliente = new javax.swing.JTextField();
+        Nombre_Cliente = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel36 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        Tabla_Clientes = new javax.swing.JTable();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        Cliente_Empresa = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
+        Contacto_Cliente = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        jTextField10 = new javax.swing.JTextField();
         label_eventos = new javax.swing.JLabel();
         label_menu = new javax.swing.JLabel();
         imagen_principal = new javax.swing.JLabel();
@@ -421,7 +444,7 @@ public class principal extends javax.swing.JFrame {
         jLabel30.setText("Duracion: ");
         jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
 
-        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 50, -1));
 
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
@@ -430,6 +453,88 @@ public class principal extends javax.swing.JFrame {
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
         jd_evento.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 910, 700));
+
+        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jDialog1.getContentPane().add(telefono_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 160, -1));
+        jDialog1.getContentPane().add(Nombre_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 160, -1));
+
+        jLabel32.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("Correo");
+        jDialog1.getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 50, 20));
+
+        jLabel33.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("Telèfono");
+        jDialog1.getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
+
+        jLabel34.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("Nombre Empresa");
+        jDialog1.getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+
+        jLabel35.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("Clientes");
+        jDialog1.getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 160, 40));
+        jDialog1.getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 150, 10));
+
+        jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/tela-polar-azul-marino.jpg"))); // NOI18N
+        jLabel36.setText("jLabel3");
+        jDialog1.getContentPane().add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 530));
+
+        Tabla_Clientes.setForeground(new java.awt.Color(0, 0, 51));
+        Tabla_Clientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Telefono", "Correo", "Nombre del CLiente", "Nombre de ls Empresa"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(Tabla_Clientes);
+
+        jDialog1.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 600, 210));
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/buttoncolor.PNG"))); // NOI18N
+        jLabel37.setText("jLabel8");
+        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel37MouseClicked(evt);
+            }
+        });
+        jDialog1.getContentPane().add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 90, 30));
+
+        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Delete.PNG"))); // NOI18N
+        jLabel38.setText("jLabel9");
+        jDialog1.getContentPane().add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 50, 40));
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Modify.PNG"))); // NOI18N
+        jLabel39.setText("jLabel10");
+        jDialog1.getContentPane().add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 50, 40));
+        jDialog1.getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 160, -1));
+        jDialog1.getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 160, -1));
+        jDialog1.getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 160, -1));
+        jDialog1.getContentPane().add(Cliente_Empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 160, -1));
+
+        jLabel40.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Nombre_Contacto");
+        jDialog1.getContentPane().add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
+        jDialog1.getContentPane().add(Contacto_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 160, -1));
+
+        jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
+        jLabel41.setText("jLabel1");
+        jDialog1.getContentPane().add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 570));
+        jDialog1.getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 160, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INNOVA PRODUCCIONES");
@@ -460,6 +565,11 @@ public class principal extends javax.swing.JFrame {
         label_cliente.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
         label_cliente.setForeground(new java.awt.Color(255, 255, 255));
         label_cliente.setText("Clientes");
+        label_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_clienteMouseClicked(evt);
+            }
+        });
         label_cliente.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 label_clienteMouseMoved(evt);
@@ -794,6 +904,23 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jl_EditEvtMouseClicked
 
+    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
+        try {
+            //TODO add your handling code here:
+            ag_cliente_sql();
+        } catch (SQLException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        agregar_tabla();
+    }//GEN-LAST:event_jLabel37MouseClicked
+
+    private void label_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_clienteMouseClicked
+          this.jDialog1.setVisible(true);
+        this.jDialog1.setLocationRelativeTo(this);
+        this.jDialog1.pack();
+        this.jDialog1.setModal(true);
+    }//GEN-LAST:event_label_clienteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -824,13 +951,21 @@ public class principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new principal().setVisible(true);
+                try {
+                    new principal().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background_principal;
+    private javax.swing.JTextField Cliente_Empresa;
+    private javax.swing.JTextField Contacto_Cliente;
+    private javax.swing.JTextField Nombre_Cliente;
+    private javax.swing.JTable Tabla_Clientes;
     private javax.swing.JComboBox<String> cb_EvtCliente;
     private javax.swing.JTextField codigo_inventario;
     private javax.swing.JTextArea descripcion_inventario;
@@ -838,6 +973,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ftf_EvtFecha;
     private javax.swing.JFormattedTextField ftf_EvtHora;
     private javax.swing.JLabel imagen_principal;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -862,7 +998,17 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -872,9 +1018,15 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JDialog jd_evento;
     private javax.swing.JDialog jd_inventario;
     private javax.swing.JDialog jd_personal;
@@ -892,6 +1044,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField nombre_inventario;
     private javax.swing.JSpinner sp_EvtDur;
     private javax.swing.JSpinner sp_EvtPersonas;
+    private javax.swing.JTextField telefono_cliente;
     private javax.swing.JTextField tf_EvtTipo;
     private javax.swing.JTextField tf_EvtUbicacion;
     private javax.swing.JTextField tf_nombrePersonal;
@@ -1174,6 +1327,45 @@ public class principal extends javax.swing.JFrame {
             }
         } catch (Exception e) {
 
+        }
+    }
+      public void ag_cliente_sql() throws SQLException {
+        Statement statement = con.createStatement();
+      //  statement.executeQuery();
+        statement.executeUpdate("INSERT  INTO Clientes(Telefono,correo,Nombre_Contacto,Nombre_Empresa)  " + "VALUES ("  + Integer.parseInt(this.telefono_cliente.getText()) + ", " + "'" + this.Nombre_Cliente.getText() + "'" + ", " + "'" + this.Contacto_Cliente.getText() + "'" + ", " + "'" + this.Cliente_Empresa.getText() + "'" + " )");
+    }
+
+    public void agregar_tabla() {
+        Cliente cliente = new Cliente(clientes.size(), Integer.parseInt(this.telefono_cliente.getText()), this.Nombre_Cliente.getText(), this.Contacto_Cliente.getText(), this.Cliente_Empresa.getText());
+        clientes.add(cliente);
+        DefaultTableModel ModeloTabla = (DefaultTableModel) this.Tabla_Clientes.getModel();
+
+        while (ModeloTabla.getRowCount() > 0) {
+            ModeloTabla.removeRow(0);
+        }
+
+        for (int i = 0; i < clientes.size(); i++) {
+
+            String[] Row = {clientes.get(i).getID() + "", clientes.get(i).getTelefono() + "", clientes.get(i).getCorreo(), clientes.get(i).getNombre_contact(), clientes.get(i).getNombre_empresa()};
+            ModeloTabla.addRow(Row);
+
+        }
+
+        this.Tabla_Clientes.setModel(ModeloTabla);
+    }
+    public void cliente() throws SQLException {
+        Statement consu = con.createStatement();
+
+        ResultSet result1 = consu.executeQuery("select ID,Telefono,Correo,Nombre_Contacto,Nombre_Empresa  from Clientes");
+
+        while (result1.next()) {
+            String nombri = result1.getString("ID");
+            String numeri = result1.getString("Telefono");
+            String correo = result1.getString("Correo");
+            String contacto = result1.getString("Nombre_Contacto");
+            String empresa = result1.getString("Nombre_Empresa");
+            Cliente cliente = new Cliente(Integer.parseInt(nombri), Integer.parseInt(numeri), correo, contacto, empresa);
+            clientes.add(cliente);
         }
     }
 }
