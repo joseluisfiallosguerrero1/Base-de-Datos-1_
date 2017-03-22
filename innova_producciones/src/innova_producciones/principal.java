@@ -5,12 +5,14 @@
  */
 package innova_producciones;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,12 +117,8 @@ public class principal extends javax.swing.JFrame {
         tf_EvtTipo = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         sp_EvtPersonas = new javax.swing.JSpinner();
-        ftf_EvtFecha = new javax.swing.JFormattedTextField();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        ftf_EvtHora = new javax.swing.JFormattedTextField();
         jLabel28 = new javax.swing.JLabel();
-        cb_EvtCliente = new javax.swing.JComboBox<String>();
+        cb_EvtCliente = new javax.swing.JComboBox<>();
         jl_AddEvt = new javax.swing.JLabel();
         jl_DelEvt = new javax.swing.JLabel();
         jl_EditEvt = new javax.swing.JLabel();
@@ -129,6 +127,8 @@ public class principal extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         jl_BuscarEvento = new javax.swing.JLabel();
         jb_CancelEvtSearch = new javax.swing.JButton();
+        jdc_EvtDate = new com.toedter.calendar.JDateChooser();
+        jLabel26 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jd_cliente = new javax.swing.JDialog();
         telefono_cliente = new javax.swing.JTextField();
@@ -157,24 +157,24 @@ public class principal extends javax.swing.JFrame {
         jmi_AssignPer = new javax.swing.JMenuItem();
         jd_EvtPersonal = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jl_PersonalDisponible = new javax.swing.JList<String>();
+        jl_PersonalDisponible = new javax.swing.JList<>();
         jLabel42 = new javax.swing.JLabel();
         jb_PersToEvt = new javax.swing.JButton();
         jb_AllPersToEvt = new javax.swing.JButton();
         jb_EvtToPers = new javax.swing.JButton();
         jb_AllEvtToPers = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jl_PersonalAsignado = new javax.swing.JList<String>();
+        jl_PersonalAsignado = new javax.swing.JList<>();
         jLabel43 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jd_EvtInventario = new javax.swing.JDialog();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jl_InvDisponible = new javax.swing.JList<String>();
+        jl_InvDisponible = new javax.swing.JList<>();
         jLabel45 = new javax.swing.JLabel();
         jb_InvToEvt = new javax.swing.JButton();
         jb_EvtToInv = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jl_InvAsignado = new javax.swing.JList<String>();
+        jl_InvAsignado = new javax.swing.JList<>();
         jLabel46 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         label_eventos = new javax.swing.JLabel();
@@ -430,54 +430,32 @@ public class principal extends javax.swing.JFrame {
 
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Ubicación: ");
-        jd_evento.getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
-        jd_evento.getContentPane().add(tf_EvtUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 460, -1));
+        jd_evento.getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
+        jd_evento.getContentPane().add(tf_EvtUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 460, -1));
 
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("Tipo de evento: ");
-        jd_evento.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+        jd_evento.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, -1, -1));
 
         tf_EvtTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_EvtTipoActionPerformed(evt);
             }
         });
-        jd_evento.getContentPane().add(tf_EvtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 460, -1));
+        jd_evento.getContentPane().add(tf_EvtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, 460, -1));
 
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Personas: ");
-        jd_evento.getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
+        jd_evento.getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
 
         sp_EvtPersonas.setModel(new javax.swing.SpinnerNumberModel(0, 0, 9999, 1));
-        jd_evento.getContentPane().add(sp_EvtPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 60, -1));
-
-        try {
-            ftf_EvtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jd_evento.getContentPane().add(ftf_EvtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 162, 460, 30));
-
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Fecha (AAAA/MM/DD):");
-        jd_evento.getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
-
-        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel27.setText("Hora: ");
-        jd_evento.getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
-
-        try {
-            ftf_EvtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jd_evento.getContentPane().add(ftf_EvtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 240, -1));
+        jd_evento.getContentPane().add(sp_EvtPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 60, -1));
 
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Cliente: ");
-        jd_evento.getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, -1, -1));
+        jd_evento.getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
 
-        jd_evento.getContentPane().add(cb_EvtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 370, -1));
+        jd_evento.getContentPane().add(cb_EvtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 370, -1));
 
         jl_AddEvt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/buttoncolor.PNG"))); // NOI18N
         jl_AddEvt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -485,7 +463,7 @@ public class principal extends javax.swing.JFrame {
                 jl_AddEvtMouseClicked(evt);
             }
         });
-        jd_evento.getContentPane().add(jl_AddEvt, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 100, -1));
+        jd_evento.getContentPane().add(jl_AddEvt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 100, -1));
 
         jl_DelEvt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Delete.PNG"))); // NOI18N
         jl_DelEvt.setToolTipText("");
@@ -506,14 +484,14 @@ public class principal extends javax.swing.JFrame {
 
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Duracion: ");
-        jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
+        jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, -1, -1));
 
-        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 50, -1));
+        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 50, -1));
 
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Hora(s)");
-        jd_evento.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
+        jd_evento.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
 
         jl_BuscarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/search.png"))); // NOI18N
         jl_BuscarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -531,6 +509,11 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jd_evento.getContentPane().add(jb_CancelEvtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 50));
+        jd_evento.getContentPane().add(jdc_EvtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 240, -1));
+
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Fecha: ");
+        jd_evento.getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, -1));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
         jd_evento.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 870, 700));
@@ -944,8 +927,6 @@ public class principal extends javax.swing.JFrame {
         tf_EvtUbicacion.setText("");
         tf_EvtTipo.setText("");
         sp_EvtPersonas.setValue(0);
-        ftf_EvtFecha.setText("");
-        ftf_EvtHora.setText("");
         cb_EvtCliente.setSelectedIndex(-1);
         try {
             if (con.isClosed()) {
@@ -979,16 +960,19 @@ public class principal extends javax.swing.JFrame {
              java.util.Date dat= df.parse(ftf_EvtFecha.getText());
              System.out.println(dat.toString());
              */
+            java.util.Date asd=jdc_EvtDate.getDate();
+            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+            
+            
             String idC = cb_EvtCliente.getSelectedItem().toString();
             idC = idC.substring(0, idC.indexOf(".-"));
-            st.executeUpdate("insert into Evento values ('" + tf_EvtUbicacion.getText() + "','" + tf_EvtTipo.getText() + "'," + sp_EvtPersonas.getValue() + ",GETDATE()," + sp_EvtDur.getValue() + "," + idC + ")");
+            st.executeUpdate("insert into Evento values ('" + tf_EvtUbicacion.getText() + "','" + tf_EvtTipo.getText() + "'," + sp_EvtPersonas.getValue() + ",'"+format.format(asd)+"'," + sp_EvtDur.getValue() + "," + Integer.parseInt(idC) + ",0)");
             ReloadEvents();
             tf_EvtUbicacion.setText("");
             tf_EvtTipo.setText("");
             sp_EvtPersonas.setValue(0);
             sp_EvtDur.setValue(1);
-            ftf_EvtFecha.setText("");
-            ftf_EvtHora.setText("");
+            jdc_EvtDate.setDate(null);
             cb_EvtCliente.setSelectedIndex(0);
         } catch (SQLException ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -1094,7 +1078,15 @@ public class principal extends javax.swing.JFrame {
 
                         }
                     } else if (fila == 4) {
-
+                        JDateChooser jdc=new JDateChooser();
+                        String msg="Elija la nueva fecha para el evento";
+                        Object[] params={msg,jdc};
+                        JOptionPane.showConfirmDialog(jd_evento, params,"Nueva Fecha",JOptionPane.PLAIN_MESSAGE);
+                        String s="";
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                        s=sdf.format(((JDateChooser)params[1]).getDate());
+                        
+                        st.executeUpdate("update Evento set fecha='"+s+"' where Código="+id);
                     } else if (fila == 5) {
                         String nDur = JOptionPane.showInputDialog(jd_evento, "Ingrese la nueva duracion(horas) del evento: ", "Cambio de duracion", JOptionPane.QUESTION_MESSAGE);
                         if (nDur.matches("\\d+$")) {
@@ -1440,8 +1432,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField codigo_inventario;
     private javax.swing.JTextArea descripcion_inventario;
     private javax.swing.JLabel error;
-    private javax.swing.JFormattedTextField ftf_EvtFecha;
-    private javax.swing.JFormattedTextField ftf_EvtHora;
     private javax.swing.JLabel imagen_principal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1462,7 +1452,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1520,6 +1509,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JDialog jd_evento;
     private javax.swing.JDialog jd_inventario;
     private javax.swing.JDialog jd_personal;
+    private com.toedter.calendar.JDateChooser jdc_EvtDate;
     private javax.swing.JLabel jl_AddEvt;
     private javax.swing.JLabel jl_BuscarEvento;
     private javax.swing.JLabel jl_DelEvt;
