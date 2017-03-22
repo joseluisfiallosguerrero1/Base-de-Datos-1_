@@ -105,6 +105,8 @@ public class principal extends javax.swing.JFrame {
         jt_personal = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jl_BuscarPersonal = new javax.swing.JLabel();
+        jb_CancelPersonalSearch = new javax.swing.JButton();
         jd_evento = new javax.swing.JDialog();
         jLabel22 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -118,7 +120,7 @@ public class principal extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         sp_EvtPersonas = new javax.swing.JSpinner();
         jLabel28 = new javax.swing.JLabel();
-        cb_EvtCliente = new javax.swing.JComboBox<>();
+        cb_EvtCliente = new javax.swing.JComboBox<String>();
         jl_AddEvt = new javax.swing.JLabel();
         jl_DelEvt = new javax.swing.JLabel();
         jl_EditEvt = new javax.swing.JLabel();
@@ -157,24 +159,24 @@ public class principal extends javax.swing.JFrame {
         jmi_AssignPer = new javax.swing.JMenuItem();
         jd_EvtPersonal = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jl_PersonalDisponible = new javax.swing.JList<>();
+        jl_PersonalDisponible = new javax.swing.JList<String>();
         jLabel42 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        tf_salario = new javax.swing.JTextField();
         jb_PersToEvt = new javax.swing.JButton();
-        jb_AllPersToEvt = new javax.swing.JButton();
         jb_EvtToPers = new javax.swing.JButton();
-        jb_AllEvtToPers = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jl_PersonalAsignado = new javax.swing.JList<>();
+        jl_PersonalAsignado = new javax.swing.JList<String>();
         jLabel43 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jd_EvtInventario = new javax.swing.JDialog();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jl_InvDisponible = new javax.swing.JList<>();
+        jl_InvDisponible = new javax.swing.JList<String>();
         jLabel45 = new javax.swing.JLabel();
         jb_InvToEvt = new javax.swing.JButton();
         jb_EvtToInv = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jl_InvAsignado = new javax.swing.JList<>();
+        jl_InvAsignado = new javax.swing.JList<String>();
         jLabel46 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         label_eventos = new javax.swing.JLabel();
@@ -388,6 +390,23 @@ public class principal extends javax.swing.JFrame {
         jLabel18.setText("jLabel1");
         jd_personal.getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 560));
 
+        jl_BuscarPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/search.png"))); // NOI18N
+        jl_BuscarPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_BuscarPersonalMouseClicked(evt);
+            }
+        });
+        jd_personal.getContentPane().add(jl_BuscarPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 600, -1, -1));
+
+        jb_CancelPersonalSearch.setText("Limpiar busqueda");
+        jb_CancelPersonalSearch.setEnabled(false);
+        jb_CancelPersonalSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CancelPersonalSearchMouseClicked(evt);
+            }
+        });
+        jd_personal.getContentPane().add(jb_CancelPersonalSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 50));
+
         jd_evento.setResizable(false);
         jd_evento.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -486,7 +505,7 @@ public class principal extends javax.swing.JFrame {
         jLabel30.setText("Duracion: ");
         jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, -1, -1));
 
-        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 50, -1));
 
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
@@ -635,6 +654,10 @@ public class principal extends javax.swing.JFrame {
         jLabel42.setText("Personal Disponible");
         jd_EvtPersonal.getContentPane().add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
+        jLabel27.setText("Salario:");
+        jd_EvtPersonal.getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 40, 20));
+        jd_EvtPersonal.getContentPane().add(tf_salario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 80, -1));
+
         jb_PersToEvt.setText("--->");
         jb_PersToEvt.setEnabled(false);
         jb_PersToEvt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -644,17 +667,14 @@ public class principal extends javax.swing.JFrame {
         });
         jd_EvtPersonal.getContentPane().add(jb_PersToEvt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 80, -1));
 
-        jb_AllPersToEvt.setText("===>");
-        jb_AllPersToEvt.setEnabled(false);
-        jd_EvtPersonal.getContentPane().add(jb_AllPersToEvt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 80, -1));
-
         jb_EvtToPers.setText("<---");
         jb_EvtToPers.setEnabled(false);
+        jb_EvtToPers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_EvtToPersMouseClicked(evt);
+            }
+        });
         jd_EvtPersonal.getContentPane().add(jb_EvtToPers, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 80, -1));
-
-        jb_AllEvtToPers.setText("<===");
-        jb_AllEvtToPers.setEnabled(false);
-        jd_EvtPersonal.getContentPane().add(jb_AllEvtToPers, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 80, -1));
 
         jl_PersonalAsignado.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jl_PersonalAsignado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -858,20 +878,19 @@ public class principal extends javax.swing.JFrame {
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         try {
-            PreparedStatement statement = con.prepareStatement("insert into Personal (teléfono, nombre, puesto) values (?,?,?)");
+            PreparedStatement statement = con.prepareStatement("insert into Personal (teléfono, nombre, puesto, contratado) values (?,?,?)");
             int telefono = Integer.parseInt(tf_telefonoPersonal.getText());
             String nombre = tf_nombrePersonal.getText();
             String puesto = tf_puestoPersonal.getText();
             statement.setInt(1, telefono);
             statement.setString(2, nombre);
-            statement.setString(3, puesto);;
+            statement.setString(3, puesto);
+            statement.setString(4, "Si");
             this.tf_telefonoPersonal.setText("");
             this.tf_nombrePersonal.setText("");
             this.tf_puestoPersonal.setText("");
-            int retorno = statement.executeUpdate();
-            if (retorno > 0) {
-                JOptionPane.showMessageDialog(this, "Contacto creado");
-            }
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Contacto creado");
             actualizar(jt_personal);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1175,7 +1194,31 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jl_PersonalAsignadoMouseClicked
 
     private void jb_PersToEvtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_PersToEvtMouseClicked
-
+        if (!jl_PersonalDisponible.isSelectionEmpty()) {
+            try {
+                int id = Integer.parseInt(jl_PersonalDisponible.getSelectedValue().charAt(0) + "");
+                String input = this.tf_salario.getText();
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery("select * from Eventos_Personal where ID_Personal=" + id + " and Código_Evento=" + currEvt);
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(jd_EvtPersonal, "Esta persona ya fue asignado al evento");
+                } else {
+                    if (input.matches("\\d+$")&& Integer.parseInt(input) > 0) {
+                        statement.executeUpdate("insert into Eventos_Personal values(" + id + "," + currEvt + "," + input+ ")");
+                        DefaultListModel mod = (DefaultListModel) jl_PersonalAsignado.getModel();
+                        mod.addElement(jl_PersonalDisponible.getSelectedValue());
+                        jl_PersonalAsignado.setModel(mod);
+                    }else{
+                        JOptionPane.showMessageDialog(jd_EvtPersonal, "El salario tiene letras, es negativo o es 0.");
+                    }
+                    
+                }
+                rs.close();
+                statement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_jb_PersToEvtMouseClicked
 
     private void jmi_AssignInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_AssignInvActionPerformed
@@ -1383,6 +1426,64 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel47MouseClicked
 
+    private void jb_EvtToPersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_EvtToPersMouseClicked
+        if (!jl_PersonalAsignado.isSelectionEmpty()) {
+            try {
+                int id = Integer.parseInt(jl_PersonalAsignado.getSelectedValue().charAt(0) + "");
+                Statement statemnt = con.createStatement();
+                statemnt.executeUpdate("delete from Eventos_Personal where ID_Personal=" + id + " and Código_Evento=" + currEvt);
+                ResultSet rs = statemnt.executeQuery("select ID_Personal from Eventos_Personal where Código_Evento=" + currEvt);
+                Statement asig = con.createStatement();
+
+                ResultSet rs2 = null;
+                DefaultListModel lmod2 = new DefaultListModel();
+
+                while (rs.next()) {
+                    rs2 = asig.executeQuery("select * from Personal where ID=" + rs.getInt(1));
+                    while (rs2.next()) {
+                        lmod2.addElement(rs2.getInt(1) + ".-" + rs2.getString(2) + "," + rs2.getString(3));
+                    }
+                    rs2.close();
+                }
+                jl_PersonalAsignado.setModel(lmod2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jb_EvtToPersMouseClicked
+
+    private void jl_BuscarPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_BuscarPersonalMouseClicked
+        try {
+            String input = JOptionPane.showInputDialog("Ingrese el codigo del personal que desea buscar");
+            if (input.matches("\\d+$")) {
+                Statement statement = con.createStatement();
+                int id = Integer.parseInt(input);
+                ResultSet rs = statement.executeQuery("select * from Personal where ID=" + id);
+                if (rs.next()) {
+                    DefaultTableModel mod = (DefaultTableModel) jt_personal.getModel();
+                    while (mod.getRowCount() > 0) {
+                        mod.removeRow(0);
+                    }
+                    mod.addRow(new Object[]{rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)});
+                    jt_personal.setModel(mod);
+                    jb_CancelPersonalSearch.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(jd_evento, "No existe esa persona");
+                    actualizar(jt_personal);
+                }
+            } else {
+                JOptionPane.showMessageDialog(jd_evento, "Codigo invalido");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jl_BuscarPersonalMouseClicked
+
+    private void jb_CancelPersonalSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CancelPersonalSearchMouseClicked
+        actualizar(jt_personal);
+        jb_CancelPersonalSearch.setEnabled(false);
+    }//GEN-LAST:event_jb_CancelPersonalSearchMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1452,6 +1553,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1496,9 +1598,8 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JButton jb_AllEvtToPers;
-    private javax.swing.JButton jb_AllPersToEvt;
     private javax.swing.JButton jb_CancelEvtSearch;
+    private javax.swing.JButton jb_CancelPersonalSearch;
     private javax.swing.JButton jb_EvtToInv;
     private javax.swing.JButton jb_EvtToPers;
     private javax.swing.JButton jb_InvToEvt;
@@ -1512,6 +1613,7 @@ public class principal extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jdc_EvtDate;
     private javax.swing.JLabel jl_AddEvt;
     private javax.swing.JLabel jl_BuscarEvento;
+    private javax.swing.JLabel jl_BuscarPersonal;
     private javax.swing.JLabel jl_DelEvt;
     private javax.swing.JLabel jl_EditEvt;
     private javax.swing.JList<String> jl_InvAsignado;
@@ -1538,6 +1640,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField tf_EvtUbicacion;
     private javax.swing.JTextField tf_nombrePersonal;
     private javax.swing.JTextField tf_puestoPersonal;
+    private javax.swing.JTextField tf_salario;
     private javax.swing.JTextField tf_telefonoPersonal;
     // End of variables declaration//GEN-END:variables
     int idBuscar;
@@ -1563,7 +1666,7 @@ public class principal extends javax.swing.JFrame {
         try {
             Statement statement = con.createStatement();
             ResultSet rs;
-            rs = statement.executeQuery("select id from Personal;");
+            rs = statement.executeQuery("select id from Personal where contratado = 'Si';");
             int contador = 0;
             while (rs.next()) {
                 id[contador] = rs.getInt(1);
@@ -1580,7 +1683,7 @@ public class principal extends javax.swing.JFrame {
         try {
             Statement statement = con.createStatement();
             ResultSet rs;
-            rs = statement.executeQuery("select teléfono from Personal;");
+            rs = statement.executeQuery("select teléfono from Personal where contratado = 'Si';");
             int contador = 0;
             while (rs.next()) {
                 telefono[contador] = rs.getInt(1);
@@ -1597,7 +1700,7 @@ public class principal extends javax.swing.JFrame {
         try {
             Statement statement = con.createStatement();
             ResultSet rs;
-            rs = statement.executeQuery("select nombre from Personal;");
+            rs = statement.executeQuery("select nombre from Personal where contratado = 'Si';");
             int contador = 0;
             while (rs.next()) {
                 nombre[contador] = rs.getString(1);
@@ -1614,7 +1717,7 @@ public class principal extends javax.swing.JFrame {
         try {
             Statement statement = con.createStatement();
             ResultSet rs;
-            rs = statement.executeQuery("select puesto from Personal;");
+            rs = statement.executeQuery("select puesto from Personal where contratado = 'Si';");
             int contador = 0;
             while (rs.next()) {
                 puesto[contador] = rs.getString(1);
@@ -1777,7 +1880,7 @@ public class principal extends javax.swing.JFrame {
     }
 
     public void borrarPersonal() {
-        int seguro = JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar esta persona?");
+        int seguro = JOptionPane.showConfirmDialog(this, "Seguro que desea despedir esta persona?");
         if (seguro == JOptionPane.YES_OPTION) {
             try {
                 listaCambio = listaParaCambio(idBuscar);
@@ -1785,16 +1888,16 @@ public class principal extends javax.swing.JFrame {
                 ResultSet rs;
                 rs = statement.executeQuery("select* from Personal where id = '" + idBuscar + "'");
                 while (rs.next()) {
-                    PreparedStatement delete = con.prepareStatement("delete from Personal where id = '" + idBuscar + "'");
+                    PreparedStatement delete = con.prepareStatement("update Personal set Contratado = 'No' where id = '" + idBuscar + "'");
                     delete.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Se ha borrado la persona.");
+                    JOptionPane.showMessageDialog(this, "Se ha despedido la persona.");
                 }
                 actualizar(jt_personal);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha borrado la persona.");
+            JOptionPane.showMessageDialog(this, "No se ha despedido la persona.");
         }
     }
 
