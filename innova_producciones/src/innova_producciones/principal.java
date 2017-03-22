@@ -125,6 +125,8 @@ public class principal extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         sp_EvtDur = new javax.swing.JSpinner();
         jLabel31 = new javax.swing.JLabel();
+        jl_BuscarEvento = new javax.swing.JLabel();
+        jb_CancelEvtSearch = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jd_cliente = new javax.swing.JDialog();
         telefono_cliente = new javax.swing.JTextField();
@@ -488,6 +490,23 @@ public class principal extends javax.swing.JFrame {
         jLabel31.setText("Hora(s)");
         jd_evento.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
+        jl_BuscarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/search.png"))); // NOI18N
+        jl_BuscarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_BuscarEventoMouseClicked(evt);
+            }
+        });
+        jd_evento.getContentPane().add(jl_BuscarEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 600, -1, -1));
+
+        jb_CancelEvtSearch.setText("Limpiar busqueda");
+        jb_CancelEvtSearch.setEnabled(false);
+        jb_CancelEvtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CancelEvtSearchMouseClicked(evt);
+            }
+        });
+        jd_evento.getContentPane().add(jb_CancelEvtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 50));
+
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
         jd_evento.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, -4, 870, 700));
 
@@ -675,6 +694,11 @@ public class principal extends javax.swing.JFrame {
 
         jb_EvtToInv.setText("<---");
         jb_EvtToInv.setEnabled(false);
+        jb_EvtToInv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_EvtToInvMouseClicked(evt);
+            }
+        });
         jd_EvtInventario.getContentPane().add(jb_EvtToInv, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 80, -1));
 
         jl_InvAsignado.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -994,20 +1018,20 @@ public class principal extends javax.swing.JFrame {
     private void jl_DelEvtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_DelEvtMouseClicked
         try {
             if (jt_Evts.getSelectedRow() != -1) {
-                int op = JOptionPane.showConfirmDialog(jd_evento, "Eliminar este evento eliminará los registros vinculados a el. Desea continuar?", "Confirmar eliminación", JOptionPane.OK_CANCEL_OPTION);
-                if (op == JOptionPane.OK_OPTION) {
-                    DefaultTableModel mod = (DefaultTableModel) jt_Evts.getModel();
-                    int id = (Integer) mod.getValueAt(jt_Evts.getSelectedRow(), 0);
-                    Statement st = con.createStatement();
-                    st.executeUpdate("update Evento set Cancelado=1");
-                    /*st.executeUpdate("delete from Eventos_Personal where Código_Evento=" + id);
+                //int op = JOptionPane.showConfirmDialog(jd_evento, "Eliminar este evento eliminará los registros vinculados a el. Desea continuar?", "Confirmar eliminación", JOptionPane.OK_CANCEL_OPTION);
+                // if (op == JOptionPane.OK_OPTION) {
+                DefaultTableModel mod = (DefaultTableModel) jt_Evts.getModel();
+                int id = (Integer) mod.getValueAt(jt_Evts.getSelectedRow(), 0);
+                Statement st = con.createStatement();
+                st.executeUpdate("update Evento set Cancelado=1 where Código=" + id);
+                /*st.executeUpdate("delete from Eventos_Personal where Código_Evento=" + id);
                     st.executeUpdate("delete from Eventos_Producto_Rentado where Código_Evento=" + id);
                     st.executeUpdate("delete from Inventario_Eventos where Código_Evento=" + id);
                     st.executeUpdate("delete from Detalle_de_venta where Código_Evento=" + id);*/
-                    //st.executeUpdate("delete from Evento where Código=" + id);
-                    //st.execute("declare @cod int select @cod=max(Código) from Evento DBCC CHECKIDENT (Evento,RESEED,@cod)");
-                    ReloadEvents();
-                }
+                //st.executeUpdate("delete from Evento where Código=" + id);
+                //st.execute("declare @cod int select @cod=max(Código) from Evento DBCC CHECKIDENT (Evento,RESEED,@cod)");
+                ReloadEvents();
+                // }
             } else {
                 JOptionPane.showMessageDialog(jd_evento, "Seleccione un evento de la tabla para eliminar");
             }
@@ -1093,10 +1117,12 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_label_clienteMouseClicked
 
     private void jt_EvtsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_EvtsMouseClicked
-        if (SwingUtilities.isRightMouseButton(evt) && jt_Evts.getSelectedRow() != -1) {
+        try {
             currEvt = (Integer) jt_Evts.getValueAt(jt_Evts.getSelectedRow(), 0);
-
-            jpm_Evts.show(jsp_TablaEventos, evt.getX(), evt.getY());
+            if (SwingUtilities.isRightMouseButton(evt) && jt_Evts.getSelectedRow() != -1) {
+                jpm_Evts.show(jsp_TablaEventos, evt.getX(), evt.getY());
+            }
+        } catch (Exception e) {
 
         }
     }//GEN-LAST:event_jt_EvtsMouseClicked
@@ -1192,13 +1218,13 @@ public class principal extends javax.swing.JFrame {
             try {
                 int id = Integer.parseInt(jl_InvDisponible.getSelectedValue().charAt(0) + "");
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from Inventario_Eventos where Código_Inventario="+id+" and Código_Evento="+currEvt);
-                if(rs.next()){
+                ResultSet rs = st.executeQuery("select * from Inventario_Eventos where Código_Inventario=" + id + " and Código_Evento=" + currEvt);
+                if (rs.next()) {
                     JOptionPane.showMessageDialog(jd_EvtInventario, "Ese producto ya fue asignado al evento");
-                }else{
-                    
-                    st.executeUpdate("insert into Inventario_Eventos values("+id+","+currEvt+")");
-                    DefaultListModel mod=(DefaultListModel)jl_InvAsignado.getModel();
+                } else {
+
+                    st.executeUpdate("insert into Inventario_Eventos values(" + id + "," + currEvt + ")");
+                    DefaultListModel mod = (DefaultListModel) jl_InvAsignado.getModel();
                     mod.addElement(jl_InvDisponible.getSelectedValue());
                     jl_InvAsignado.setModel(mod);
                 }
@@ -1225,6 +1251,65 @@ public class principal extends javax.swing.JFrame {
             jb_EvtToInv.setEnabled(true);
         }
     }//GEN-LAST:event_jl_InvAsignadoMouseClicked
+
+    private void jb_EvtToInvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_EvtToInvMouseClicked
+        if (!jl_InvAsignado.isSelectionEmpty()) {
+            try {
+                int id = Integer.parseInt(jl_InvAsignado.getSelectedValue().charAt(0) + "");
+                Statement st = con.createStatement();
+                st.executeUpdate("delete from Inventario_Eventos where Código_Inventario=" + id + " and Código_Evento=" + currEvt);
+                ResultSet rs = st.executeQuery("select Código_Inventario from Inventario_Eventos where Código_Evento=" + currEvt);
+                Statement asig = con.createStatement();
+
+                ResultSet rs2 = null;
+                DefaultListModel lmod2 = new DefaultListModel();
+
+                while (rs.next()) {
+                    rs2 = asig.executeQuery("select * from Inventario where Código=" + rs.getInt(1));
+                    while (rs2.next()) {
+                        lmod2.addElement(rs2.getInt(1) + ".-" + rs2.getString(2) + "," + rs2.getString(3));
+
+                    }
+                    rs2.close();
+                }
+                jl_InvAsignado.setModel(lmod2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jb_EvtToInvMouseClicked
+
+    private void jl_BuscarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_BuscarEventoMouseClicked
+        try {
+            String input = JOptionPane.showInputDialog("Ingrese el codigo del evento que desea buscar");
+            if (input.matches("\\d+$")) {
+                Statement st = con.createStatement();
+                int id = Integer.parseInt(input);
+                ResultSet rs = st.executeQuery("select * from Evento where Código=" + id);
+                if (rs.next()) {
+                    DefaultTableModel mod=(DefaultTableModel)jt_Evts.getModel();
+                    while(mod.getRowCount()>0){
+                        mod.removeRow(0);
+                    }
+                    mod.addRow(new Object[]{rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDate(5), rs.getInt(6), rs.getInt(7)});
+                    jt_Evts.setModel(mod);
+                    jb_CancelEvtSearch.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(jd_evento, "No existe ese evento");
+                    ReloadEvents();
+                }
+            } else {
+                JOptionPane.showMessageDialog(jd_evento, "Codigo invalido");
+            }
+        } catch (Exception E) {
+
+        }
+    }//GEN-LAST:event_jl_BuscarEventoMouseClicked
+
+    private void jb_CancelEvtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CancelEvtSearchMouseClicked
+        ReloadEvents();
+        jb_CancelEvtSearch.setEnabled(false);
+    }//GEN-LAST:event_jb_CancelEvtSearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1342,6 +1427,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JButton jb_AllEvtToPers;
     private javax.swing.JButton jb_AllPersToEvt;
+    private javax.swing.JButton jb_CancelEvtSearch;
     private javax.swing.JButton jb_EvtToInv;
     private javax.swing.JButton jb_EvtToPers;
     private javax.swing.JButton jb_InvToEvt;
@@ -1353,6 +1439,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JDialog jd_inventario;
     private javax.swing.JDialog jd_personal;
     private javax.swing.JLabel jl_AddEvt;
+    private javax.swing.JLabel jl_BuscarEvento;
     private javax.swing.JLabel jl_DelEvt;
     private javax.swing.JLabel jl_EditEvt;
     private javax.swing.JList<String> jl_InvAsignado;
