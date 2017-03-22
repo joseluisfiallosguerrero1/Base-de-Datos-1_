@@ -83,6 +83,8 @@ public class principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         descripcion_inventario = new javax.swing.JTextArea();
         error = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jd_personal = new javax.swing.JDialog();
         jLabel6 = new javax.swing.JLabel();
@@ -118,7 +120,7 @@ public class principal extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         ftf_EvtHora = new javax.swing.JFormattedTextField();
         jLabel28 = new javax.swing.JLabel();
-        cb_EvtCliente = new javax.swing.JComboBox<>();
+        cb_EvtCliente = new javax.swing.JComboBox<String>();
         jl_AddEvt = new javax.swing.JLabel();
         jl_DelEvt = new javax.swing.JLabel();
         jl_EditEvt = new javax.swing.JLabel();
@@ -155,24 +157,24 @@ public class principal extends javax.swing.JFrame {
         jmi_AssignPer = new javax.swing.JMenuItem();
         jd_EvtPersonal = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jl_PersonalDisponible = new javax.swing.JList<>();
+        jl_PersonalDisponible = new javax.swing.JList<String>();
         jLabel42 = new javax.swing.JLabel();
         jb_PersToEvt = new javax.swing.JButton();
         jb_AllPersToEvt = new javax.swing.JButton();
         jb_EvtToPers = new javax.swing.JButton();
         jb_AllEvtToPers = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jl_PersonalAsignado = new javax.swing.JList<>();
+        jl_PersonalAsignado = new javax.swing.JList<String>();
         jLabel43 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jd_EvtInventario = new javax.swing.JDialog();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jl_InvDisponible = new javax.swing.JList<>();
+        jl_InvDisponible = new javax.swing.JList<String>();
         jLabel45 = new javax.swing.JLabel();
         jb_InvToEvt = new javax.swing.JButton();
         jb_EvtToInv = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jl_InvAsignado = new javax.swing.JList<>();
+        jl_InvAsignado = new javax.swing.JList<String>();
         jLabel46 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         label_eventos = new javax.swing.JLabel();
@@ -237,11 +239,11 @@ public class principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Nombe", "Descripcion", "En Uso"
+                "Codigo", "Nombe", "Descripcion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -254,6 +256,11 @@ public class principal extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Modify.PNG"))); // NOI18N
         jLabel10.setText("jLabel10");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
         jd_inventario.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 50, 40));
 
         descripcion_inventario.setColumns(20);
@@ -264,6 +271,24 @@ public class principal extends javax.swing.JFrame {
 
         error.setForeground(new java.awt.Color(255, 0, 0));
         jd_inventario.getContentPane().add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 20, 20));
+
+        jLabel47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/Search.PNG"))); // NOI18N
+        jLabel47.setText("jLabel47");
+        jLabel47.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel47MouseClicked(evt);
+            }
+        });
+        jd_inventario.getContentPane().add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 50, 40));
+
+        jLabel48.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/List.PNG"))); // NOI18N
+        jLabel48.setText("jLabel48");
+        jLabel48.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel48MouseClicked(evt);
+            }
+        });
+        jd_inventario.getContentPane().add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 50, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/innova_producciones/textura-fondo-azul-1573.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -483,7 +508,7 @@ public class principal extends javax.swing.JFrame {
         jLabel30.setText("Duracion: ");
         jd_evento.getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
 
-        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        sp_EvtDur.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         jd_evento.getContentPane().add(sp_EvtDur, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 50, -1));
 
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
@@ -830,10 +855,11 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_label_inventarioMouseMoved
 
     private void label_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_inventarioMouseClicked
-        jd_inventario.setVisible(true);
-        jd_inventario.setLocationRelativeTo(this);
-        jd_inventario.pack();
         jd_inventario.setModal(true);
+        jd_inventario.pack();
+        jd_inventario.setLocationRelativeTo(this);
+        jd_inventario.setVisible(true);
+        
     }//GEN-LAST:event_label_inventarioMouseClicked
 
     private void jd_personalWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_personalWindowOpened
@@ -949,9 +975,9 @@ public class principal extends javax.swing.JFrame {
         try {
             Statement st = con.createStatement();
             /*String[] pFecha=ftf_EvtFecha.getText().split("/");
-            DateFormat df=new SimpleDateFormat("MM/dd/YYYY");
-            java.util.Date dat= df.parse(ftf_EvtFecha.getText());
-            System.out.println(dat.toString());
+             DateFormat df=new SimpleDateFormat("MM/dd/YYYY");
+             java.util.Date dat= df.parse(ftf_EvtFecha.getText());
+             System.out.println(dat.toString());
              */
             String idC = cb_EvtCliente.getSelectedItem().toString();
             idC = idC.substring(0, idC.indexOf(".-"));
@@ -982,7 +1008,7 @@ public class principal extends javax.swing.JFrame {
                 if (nombre.isEmpty()) {
                     nombre = "N/A";
                 }
-                st.execute("insert Inventario values (" + codigo + ",'" + nombre + "','" + descripcion + "'," + 0 + ")");
+                st.execute("insert Inventario values (" + codigo + ",'" + nombre + "','" + descripcion + "'," + 1 + ")");
                 JOptionPane.showMessageDialog(jd_inventario, "¡Se ha agregado al Inventario con éxito!");
                 codigo_inventario.setText("");
                 nombre_inventario.setText("");
@@ -1005,7 +1031,7 @@ public class principal extends javax.swing.JFrame {
             try {
                 Statement st = con.createStatement();
                 int codigo = Integer.parseInt(jt_inventario.getValueAt(jt_inventario.getSelectedRow(), 0).toString());
-                st.execute("Delete Inventario from Inventario where Código =" + codigo);
+                st.execute("update Inventario set En_uso = 0 where Código='" + codigo + "'");
                 JOptionPane.showMessageDialog(jd_inventario, "¡Se Elimino el objeto del inventario exitosamente!");
                 refresh();
             } catch (Exception e) {
@@ -1025,9 +1051,9 @@ public class principal extends javax.swing.JFrame {
                 Statement st = con.createStatement();
                 st.executeUpdate("update Evento set Cancelado=1 where Código=" + id);
                 /*st.executeUpdate("delete from Eventos_Personal where Código_Evento=" + id);
-                    st.executeUpdate("delete from Eventos_Producto_Rentado where Código_Evento=" + id);
-                    st.executeUpdate("delete from Inventario_Eventos where Código_Evento=" + id);
-                    st.executeUpdate("delete from Detalle_de_venta where Código_Evento=" + id);*/
+                 st.executeUpdate("delete from Eventos_Producto_Rentado where Código_Evento=" + id);
+                 st.executeUpdate("delete from Inventario_Eventos where Código_Evento=" + id);
+                 st.executeUpdate("delete from Detalle_de_venta where Código_Evento=" + id);*/
                 //st.executeUpdate("delete from Evento where Código=" + id);
                 //st.execute("declare @cod int select @cod=max(Código) from Evento DBCC CHECKIDENT (Evento,RESEED,@cod)");
                 ReloadEvents();
@@ -1287,8 +1313,8 @@ public class principal extends javax.swing.JFrame {
                 int id = Integer.parseInt(input);
                 ResultSet rs = st.executeQuery("select * from Evento where Código=" + id);
                 if (rs.next()) {
-                    DefaultTableModel mod=(DefaultTableModel)jt_Evts.getModel();
-                    while(mod.getRowCount()>0){
+                    DefaultTableModel mod = (DefaultTableModel) jt_Evts.getModel();
+                    while (mod.getRowCount() > 0) {
                         mod.removeRow(0);
                     }
                     mod.addRow(new Object[]{rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDate(5), rs.getInt(6), rs.getInt(7)});
@@ -1310,6 +1336,60 @@ public class principal extends javax.swing.JFrame {
         ReloadEvents();
         jb_CancelEvtSearch.setEnabled(false);
     }//GEN-LAST:event_jb_CancelEvtSearchMouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        int fila = jt_inventario.getSelectedRow();
+        int columna = jt_inventario.getSelectedColumn();
+        if (fila != -1) {
+            int id = Integer.parseInt(jt_inventario.getValueAt(fila, 0).toString());
+            if (columna == 0) {
+                JOptionPane.showMessageDialog(jd_inventario, "El id no es modificable, seleccione otro dato.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (columna == 1) {
+                String nuevo = JOptionPane.showInputDialog(jd_inventario, "Escriba el nuevo Nombre", "Cambio de nombre", JOptionPane.QUESTION_MESSAGE);
+                if (nuevo != null) {
+                    try {
+                        Statement st = con.createStatement();
+                        st.execute("update Inventario set Nombre = '" + nuevo + "' where Código='" + id + "'");
+                        refresh();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se ha cambiado el teléfono.");
+                }
+            } else if (columna == 2) {
+                String nuevo = JOptionPane.showInputDialog(this, "Escriba la nueva Descripcion", "Cambio de Descripción", JOptionPane.QUESTION_MESSAGE);
+                if (nuevo != null) {
+                    try {
+                        Statement st = con.createStatement();
+                        st.execute("update Inventario set Descripción = '" + nuevo + "' where Código='" + id + "'");
+                        refresh();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se ha cambiado el teléfono.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione un dato a modificar.", "No hay datos seleccionados en la columna", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un dato a modificar.", "No hay datos seleccionados", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel48MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel48MouseClicked
+        refresh();
+    }//GEN-LAST:event_jLabel48MouseClicked
+
+    private void jLabel47MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel47MouseClicked
+        String nuevo = JOptionPane.showInputDialog(jd_inventario, "ingrese el Nombre del objeto ", JOptionPane.QUESTION_MESSAGE);
+        if (nuevo != null) {
+                refresh(nuevo);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha cambiado el teléfono.");
+        }
+    }//GEN-LAST:event_jLabel47MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1404,6 +1484,8 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1734,7 +1816,28 @@ public class principal extends javax.swing.JFrame {
         }
         try {
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select* from Inventario");
+            ResultSet rs = st.executeQuery("select* from Inventario where En_uso = 1");
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String Descripcion = rs.getString(3);
+                Object arr[] = {id, nombre, Descripcion};
+                m.addRow(arr);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void refresh(String a) {
+        DefaultTableModel m = (DefaultTableModel) jt_inventario.getModel();
+        int size = m.getRowCount();
+        for (int i = 0; i < size; i++) {
+            m.removeRow(0);
+        }
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select* from Inventario where En_uso = 1 AND Nombre='" + a + "'");
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String nombre = rs.getString(2);
